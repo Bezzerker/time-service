@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: Time Engine
+  description: API получения времени
+  contact:
+    email: wildheader@gmail.com
+  license:
+    name: Ираклий Барихашвили
+    url: https://github.com/Bezzerker
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+  description: Local server
+tags:
+- name: Time API
+  description: Предоставляет API для получения времени
+paths:
+  /api/v1/time/current:
+    get:
+      tags:
+      - Time API
+      summary: Получение времени сервера
+      description: "Предоставляет текущее время сервера с точностью до секунд, с у\
+        казанием временной зоны"
+      operationId: getCurrentTime
+      responses:
+        "200":
+          description: Успешная операция
+          headers:
+            Cache-Control:
+              description: Кэширование данных
+              style: simple
+              schema:
+                type: string
+            Content-Type:
+              description: Тип данных
+              style: simple
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeDTO'
+components:
+  schemas:
+    TimeDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          description: Дата
+          example: 2024.01.01
+        time:
+          type: string
+          description: Время
+          example: 09:01:01
+        zoneId:
+          type: string
+          description: Временная зона
+          example: Europe/Moscow
+        offset:
+          type: string
+          description: Часовой пояс
+          example: GMT+03:00
+      description: Сущность информации о времени
